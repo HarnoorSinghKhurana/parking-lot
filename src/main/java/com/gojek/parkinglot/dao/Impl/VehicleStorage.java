@@ -1,8 +1,7 @@
 package com.gojek.parkinglot.dao.Impl;
 
+import com.gojek.parkinglot.constants.ParkingLotConstants;
 import com.gojek.parkinglot.dao.StorageStructure;
-import com.gojek.parkinglot.exception.ExceptionCode;
-import com.gojek.parkinglot.exception.ParkingLotException;
 import com.gojek.parkinglot.models.Vehicle;
 import com.gojek.parkinglot.strategy.BaseStrategy;
 import com.gojek.parkinglot.strategy.NearestAllotStrategy;
@@ -36,7 +35,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     private static VehicleStorage instance = null;
 
 
-    static <T extends Vehicle> VehicleStorage<T> create(Integer capacity, Integer available, BaseStrategy parkingStrategy) {
+    static <T extends Vehicle> VehicleStorage<T> init(Integer capacity, Integer available, BaseStrategy parkingStrategy) {
         if (VehicleStorage.instance == null) {
             synchronized (StorageStructure.class) {
                 if (VehicleStorage.instance == null) {
@@ -47,15 +46,19 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
         return VehicleStorage.instance;
     }
 
+    public static VehicleStorage getInstance(){
+        return VehicleStorage.instance;
+    }
+
     @Override
     public Integer park(T vehicle) {
         if (this.available == 0) {
-            throw new ParkingLotException(ExceptionCode.PARKING_FULL, ExceptionCode.PARKING_FULL.getMessage());
+            return ParkingLotConstants.PARKING_FULL;
         }
         Integer allocatedSlot = this.parkingStrategy.getSlot();
         this.parkingStrategy.removeSlot(allocatedSlot);
         if (this.slotVehicleMap.containsValue(vehicle)) {
-            throw new ParkingLotException(ExceptionCode.VEHICLE_ALREADY_EXIST, ExceptionCode.VEHICLE_ALREADY_EXIST.getMessage());
+            return ParkingLotConstants.VEHICLE_EXISTS;
         }
         slotVehicleMap.put(allocatedSlot, vehicle);
         available--;
@@ -64,13 +67,14 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     }
 
     @Override
-    public void leaveSLot(Integer slot) {
+    public Integer leaveSlot(Integer slot) {
         if (slotVehicleMap.get(slot) == null) {
-            throw new ParkingLotException(ExceptionCode.SLOT_ALREADY_EMPTY, ExceptionCode.SLOT_ALREADY_EMPTY.getMessage());
+            return ParkingLotConstants.SLOT_ALREADY_EMPTY;
         }
         available++;
         parkingStrategy.addSlot(slot);
         slotVehicleMap.put(slot, null);
+        return slot;
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.unchecked.InvalidInputTypeException;
 import com.gojek.parkinglot.request.command.RequestCommand;
 import com.gojek.parkinglot.service.impl.ParkingServiceImpl;
+import com.gojek.parkinglot.service.impl.StorageServiceImpl;
+import com.gojek.parkinglot.validate.ParkingValidator;
 
 public class RequestFactory {
 
@@ -14,7 +16,9 @@ public class RequestFactory {
     }
 
     public static RequestType process(String... args) {
-        Command command = new RequestCommand(new ParkingServiceImpl(new StorageDaoImpl()));
+        Command command = new RequestCommand(
+                new ParkingServiceImpl(
+                        new StorageServiceImpl(new StorageDaoImpl()), new ParkingValidator()));
         switch (args.length) {
             case 0:
                 return new InteractiveRequestType(command);

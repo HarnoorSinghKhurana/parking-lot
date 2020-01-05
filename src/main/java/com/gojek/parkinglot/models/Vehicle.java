@@ -44,8 +44,7 @@ public abstract class Vehicle {
         if (this == o) return true;
         if (!(o instanceof Vehicle)) return false;
         Vehicle vehicle = (Vehicle) o;
-        return getId() == vehicle.getId() &&
-                Objects.equals(getRegistrationNumber(), vehicle.getRegistrationNumber()) &&
+        return Objects.equals(getRegistrationNumber(), vehicle.getRegistrationNumber()) &&
                 getColor() == vehicle.getColor();
     }
 

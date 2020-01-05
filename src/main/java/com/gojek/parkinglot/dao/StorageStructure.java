@@ -6,10 +6,9 @@ import java.util.List;
 
 public interface StorageStructure<T extends Vehicle> {
 
-
     Integer park(T vehicle);
 
-    void leaveSLot(Integer slot);
+    Integer leaveSlot(Integer slot);
 
     List<String> getStatus();
 

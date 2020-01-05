@@ -10,7 +10,7 @@ public interface StorageDao<T extends Vehicle> {
 
     Integer park(T vehicle);
 
-    void leaveSlot(Integer slotNumber);
+    Integer leaveSlot(Integer slotNumber);
 
     List<String> status();
 
