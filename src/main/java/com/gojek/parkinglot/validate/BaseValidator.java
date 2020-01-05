@@ -1,7 +1,7 @@
 package com.gojek.parkinglot.validate;
 
 
-public abstract class BaseValidator {
+public interface BaseValidator {
 
     public abstract void validateParkingExists();
 

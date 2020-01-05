@@ -17,7 +17,7 @@ public class RequestCommand implements Command {
 
     @Override
     public void execute(String command) {
-        String commandWithInputs[] = command.split(ParkingLotConstants.SPACE);
+        String[] commandWithInputs = command.split(ParkingLotConstants.SPACE);
         switch (commandWithInputs[0]){
             case ParkingLotConstants.CREATE_PARKING_LOT:
                 try {

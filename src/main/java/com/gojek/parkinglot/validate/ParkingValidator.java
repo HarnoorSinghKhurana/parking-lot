@@ -4,7 +4,7 @@ import com.gojek.parkinglot.storage.impl.VehicleStorage;
 import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.ParkingLotException;
 
-public class ParkingValidator extends BaseValidator {
+public class ParkingValidator implements BaseValidator {
 
     @Override
     public void validateParkingExists() {

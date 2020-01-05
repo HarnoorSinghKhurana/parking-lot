@@ -4,7 +4,6 @@ import com.gojek.parkinglot.models.Vehicle;
 import com.gojek.parkinglot.service.ParkingService;
 import com.gojek.parkinglot.service.StorageService;
 import com.gojek.parkinglot.validate.BaseValidator;
-import com.gojek.parkinglot.validate.ParkingValidator;
 
 public class ParkingServiceImpl implements ParkingService {
 
@@ -14,7 +13,7 @@ public class ParkingServiceImpl implements ParkingService {
 
     public ParkingServiceImpl(StorageService storageService, BaseValidator validator) {
         this.storageService = storageService;
-        this.validator = new ParkingValidator();
+        this.validator = validator;
     }
 
     @Override

@@ -78,7 +78,7 @@ public class StorageServiceImpl implements StorageService {
         try {
             lock.readLock().lock();
             List<String> statusList = storageDao.status();
-            if (statusList.size() == 0) {
+            if (statusList.isEmpty()) {
                 System.out.println("Parking does not exist!");
             } else {
                 System.out.println("Slot No.    Registration No    Colour");
@@ -99,8 +99,8 @@ public class StorageServiceImpl implements StorageService {
         try {
             lock.readLock().lock();
             List<String> registrationList = storageDao.getRegNumberForColor(color);
-            if (registrationList.size() == 0)
-                System.out.println("Not found");
+            if (registrationList.isEmpty())
+                System.out.println(ParkingLotConstants.NOT_FOUND);
             else {
                 System.out.println(String.join(", ", registrationList));
             }
@@ -119,8 +119,8 @@ public class StorageServiceImpl implements StorageService {
         try {
             lock.readLock().lock();
             List<Integer> slotList = storageDao.getSlotNumbersFromColor(color);
-            if (slotList.size() == 0)
-                System.out.println("Not found");
+            if (slotList.isEmpty())
+                System.out.println(ParkingLotConstants.NOT_FOUND);
             else {
                 System.out.println(slotList.stream().map(String::valueOf)
                         .collect(Collectors.joining(", ")));
@@ -140,7 +140,7 @@ public class StorageServiceImpl implements StorageService {
         try {
             lock.readLock().lock();
             Integer value = storageDao.getSlotNoFromRegistrationNo(registrationNo);
-            System.out.println(value != Integer.MIN_VALUE ? value : "Not found");
+            System.out.println(value != Integer.MIN_VALUE ? value : ParkingLotConstants.NOT_FOUND);
         } catch (Exception e) {
             if (!(e instanceof ParkingLotException)) {
                 throw new ParkingLotException(ExceptionCode.COMPUTATION_ERROR, ExceptionCode.COMPUTATION_ERROR.getMessage());

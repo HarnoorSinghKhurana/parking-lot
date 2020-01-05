@@ -20,20 +20,4 @@ public class ParkingLotException extends RuntimeException {
         this.errorCode = message;
 
     }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public Object[] getErrorParameters() {
-        return errorParameters;
-    }
-
-    public void setErrorParameters(Object[] errorParameters) {
-        this.errorParameters = errorParameters;
-    }
 }

@@ -1,7 +1,7 @@
 package com.gojek.parkinglot.request.factory;
 
 import com.gojek.parkinglot.command.Command;
-import com.gojek.parkinglot.dao.Impl.StorageDaoImpl;
+import com.gojek.parkinglot.dao.impl.StorageDaoImpl;
 import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.unchecked.InvalidInputTypeException;
 import com.gojek.parkinglot.request.command.RequestCommand;

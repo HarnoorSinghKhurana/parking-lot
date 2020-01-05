@@ -1,7 +1,7 @@
 package com.gojek.parkinglot;
 
 
-import com.gojek.parkinglot.dao.Impl.StorageDaoImpl;
+import com.gojek.parkinglot.dao.impl.StorageDaoImpl;
 import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.ParkingLotException;
 import com.gojek.parkinglot.models.Car;

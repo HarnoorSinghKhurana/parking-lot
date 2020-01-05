@@ -3,11 +3,11 @@ package com.gojek.parkinglot.request.factory;
 import com.gojek.parkinglot.constants.CommandConstants;
 import com.gojek.parkinglot.constants.ParkingLotConstants;
 
-public abstract class RequestType {
+public interface RequestType {
 
-    public abstract void begin();
+    public void begin();
 
-    public boolean validate(String command) {
+    public default boolean validate(String command) {
         try {
             String[] commandWithValues = command.split(ParkingLotConstants.SPACE);
 
