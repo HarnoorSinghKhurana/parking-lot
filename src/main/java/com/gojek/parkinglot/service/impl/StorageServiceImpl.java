@@ -150,9 +150,4 @@ public class StorageServiceImpl implements StorageService {
             lock.readLock().unlock();
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println("Slot No.    Registration No    Colour");
-        System.out.println("1           KA-01-HH-1234      White");
-    }
 }

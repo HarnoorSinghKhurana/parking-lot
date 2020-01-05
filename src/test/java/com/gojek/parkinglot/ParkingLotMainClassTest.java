@@ -170,4 +170,44 @@ public class ParkingLotMainClassTest {
         assertEquals("Createdaparkinglotwith3slots\nNotfound\n", outStream.toString().replace(" ", ""));
     }
 
+    @Test
+    public void getSlotNoFromRegistrationNoTest(){
+        ParkingService parkingService = new ParkingServiceImpl(new StorageServiceImpl(new StorageDaoImpl()), new ParkingValidator());
+        parkingService.createParkingLot(3);
+        parkingService.park(new Car("PB02-AC-1234", "Red"));
+        parkingService.getSlotNoFromRegistrationNo("PB02-AC-1234");
+        assertEquals("Createdaparkinglotwith3slots\nAllocatedslotnumber:1\n1\n",
+                outStream.toString().replace(" ", ""));
+    }
+
+    @Test
+    public void getSlotNoFromRegistrationNoTest_NotFound(){
+        ParkingService parkingService = new ParkingServiceImpl(new StorageServiceImpl(new StorageDaoImpl()), new ParkingValidator());
+        parkingService.createParkingLot(3);
+        parkingService.park(new Car("PB02-AC-1234", "Red"));
+        parkingService.getSlotNoFromRegistrationNo("PB02-AC-9999");
+        assertEquals("Createdaparkinglotwith3slots\nAllocatedslotnumber:1\n" +
+                "Notfound\n", outStream.toString().replace(" ", ""));
+    }
+
+    @Test
+    public void getSlotNumbersFromColorTest(){
+        ParkingService parkingService = new ParkingServiceImpl(new StorageServiceImpl(new StorageDaoImpl()), new ParkingValidator());
+        parkingService.createParkingLot(3);
+        parkingService.park(new Car("PB02-AC-1234", "Red"));
+        parkingService.getSlotNumbersFromColor("Red");
+        assertEquals("Createdaparkinglotwith3slots\nAllocatedslotnumber:1\n1\n",
+                outStream.toString().replace(" ", ""));
+    }
+
+    @Test
+    public void getSlotNumbersFromColorTest_NotFound(){
+        ParkingService parkingService = new ParkingServiceImpl(new StorageServiceImpl(new StorageDaoImpl()), new ParkingValidator());
+        parkingService.createParkingLot(3);
+        parkingService.park(new Car("PB02-AC-1234", "Red"));
+        parkingService.getSlotNumbersFromColor("Blue");
+        assertEquals("Createdaparkinglotwith3slots\nAllocatedslotnumber:1\n" +
+                "Notfound\n", outStream.toString().replace(" ", ""));
+    }
+
 }
