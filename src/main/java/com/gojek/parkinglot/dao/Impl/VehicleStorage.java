@@ -10,17 +10,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
 
-    private Integer capacity;
-    private Integer available;
+    private AtomicInteger capacity = new AtomicInteger();
+    private AtomicInteger available = new AtomicInteger();
     private BaseStrategy parkingStrategy;
     private Map<Integer, T> slotVehicleMap;
 
     private VehicleStorage(Integer capacity, Integer available, BaseStrategy parkingStrategy) {
-        this.capacity = capacity;
-        this.available = available;
+        this.capacity.set(capacity);
+        this.available.set(available);
         this.parkingStrategy = parkingStrategy;
         this.slotVehicleMap = new HashMap<>();
         if (parkingStrategy == null) {
@@ -52,7 +53,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
 
     @Override
     public Integer park(T vehicle) {
-        if (this.available == 0) {
+        if (this.available.get() == 0) {
             return ParkingLotConstants.PARKING_FULL;
         }
         Integer allocatedSlot = this.parkingStrategy.getSlot();
@@ -61,7 +62,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
             return ParkingLotConstants.VEHICLE_EXISTS;
         }
         slotVehicleMap.put(allocatedSlot, vehicle);
-        available--;
+        available.decrementAndGet();
         return allocatedSlot;
 
     }
@@ -71,7 +72,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
         if (slotVehicleMap.get(slot) == null) {
             return ParkingLotConstants.SLOT_ALREADY_EMPTY;
         }
-        available++;
+        available.incrementAndGet();
         parkingStrategy.addSlot(slot);
         slotVehicleMap.put(slot, null);
         return slot;
@@ -80,7 +81,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     @Override
     public List<String> getStatus() {
         List<String> statusList = new ArrayList<>();
-        for (int i = 1; i <= capacity; i++) {
+        for (int i = 1; i <= capacity.get(); i++) {
             Vehicle vehicle = slotVehicleMap.get(i);
             if (null != vehicle) {
                 statusList.add(i + "\t\t" + vehicle.getRegistrationNumber() + "\t\t" + vehicle.getColor());
@@ -92,7 +93,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     @Override
     public List<String> getRegNumberForColor(String color) {
         List<String> statusList = new ArrayList<>();
-        for (int i = 1; i <= capacity; i++) {
+        for (int i = 1; i <= capacity.get(); i++) {
             Vehicle vehicle = slotVehicleMap.get(i);
             if (null != vehicle && vehicle.getColor().equalsIgnoreCase(color)) {
                 statusList.add(vehicle.getRegistrationNumber());
@@ -104,7 +105,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     @Override
     public List<Integer> getSlotNumbersFromColor(String color) {
         List<Integer> slotList = new ArrayList<>();
-        for (int i = 1; i <= capacity; i++) {
+        for (int i = 1; i <= capacity.get(); i++) {
             Vehicle vehicle = slotVehicleMap.get(i);
             if (null != vehicle && vehicle.getColor().equalsIgnoreCase(color)) {
                 slotList.add(i);
@@ -116,7 +117,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     @Override
     public Integer getSlotNoFromRegistrationNo(String registrationNo) {
         int result = Integer.MIN_VALUE;
-        for (int i = 1; i <= capacity; i++) {
+        for (int i = 1; i <= capacity.get(); i++) {
             Vehicle vehicle = slotVehicleMap.get(i);
             if (null != vehicle && registrationNo.matches(vehicle.getRegistrationNumber())) {
                 result = i;
