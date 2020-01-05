@@ -5,22 +5,12 @@ import java.util.Random;
 
 public abstract class Vehicle {
 
-    private long id;
     private String registrationNumber;
     private String color;
 
     public Vehicle(String registrationNumber, String color) {
-        this.id = new Random().nextLong();
         this.registrationNumber = registrationNumber;
         this.color = color;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getRegistrationNumber() {
@@ -42,14 +32,14 @@ public abstract class Vehicle {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Vehicle)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Vehicle vehicle = (Vehicle) o;
         return Objects.equals(getRegistrationNumber(), vehicle.getRegistrationNumber()) &&
-                getColor() == vehicle.getColor();
+                Objects.equals(getColor(), vehicle.getColor());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRegistrationNumber(), getColor());
+        return Objects.hash(getRegistrationNumber(), getColor());
     }
 }

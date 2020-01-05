@@ -57,7 +57,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
         }
         Integer allocatedSlot = this.parkingStrategy.getSlot();
         this.parkingStrategy.removeSlot(allocatedSlot);
-        if (this.slotVehicleMap.containsValue(vehicle)) {
+        if(this.slotVehicleMap.containsValue(vehicle)){
             return ParkingLotConstants.VEHICLE_EXISTS;
         }
         slotVehicleMap.put(allocatedSlot, vehicle);
