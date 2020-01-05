@@ -4,7 +4,7 @@ public interface BaseStrategy {
 
     Integer getSlot();
 
-    void freeSlot(Integer slot);
+    void removeSlot(Integer slot);
 
     void addSlot(Integer slot);
 }

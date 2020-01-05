@@ -1,7 +1,6 @@
 package com.gojek.parkinglot.service;
 
-import com.gojek.parkinglot.models.Car;
-import com.gojek.parkinglot.models.Color;
+import com.gojek.parkinglot.models.Vehicle;
 
 public interface ParkingService extends BaseService {
 
@@ -9,13 +8,13 @@ public interface ParkingService extends BaseService {
 
     void leaveSlot(Integer slot);
 
-    void park(Car car);
+    void park(Vehicle vehicle);
 
     void getStatus();
 
-    void getRegNumberForColor(Color valueOf);
+    void getRegNumberForColor(String valueOf);
 
-    void getSlotNumbersFromColor(String commandWithInput);
+    void getSlotNumbersFromColor(String color);
 
-    void getSlotNoFromRegistrationNo(String commandWithInput);
+    void getSlotNoFromRegistrationNo(String color);
 }

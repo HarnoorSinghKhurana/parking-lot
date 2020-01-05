@@ -15,7 +15,7 @@ public abstract class RequestType {
                 return Boolean.valueOf(ParkingLotConstants.NOT_VALID);
             } else {
                 Integer paramsCount = CommandConstants.commandsMap.get(commandWithValues[0]);
-                if (paramsCount != commandWithValues.length) {
+                if (paramsCount != (commandWithValues.length-1)) {
                     return Boolean.valueOf(ParkingLotConstants.NOT_VALID);
                 }
             }

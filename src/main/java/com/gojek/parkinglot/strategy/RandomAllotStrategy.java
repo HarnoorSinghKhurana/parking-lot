@@ -8,7 +8,7 @@ public class RandomAllotStrategy implements BaseStrategy{
     }
 
     @Override
-    public void freeSlot(Integer slot) {
+    public void removeSlot(Integer slot) {
 
     }
 

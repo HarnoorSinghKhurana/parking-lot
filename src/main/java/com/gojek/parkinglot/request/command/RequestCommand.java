@@ -5,7 +5,6 @@ import com.gojek.parkinglot.constants.ParkingLotConstants;
 import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.unchecked.InvalidParkingSlotsException;
 import com.gojek.parkinglot.models.Car;
-import com.gojek.parkinglot.models.Color;
 import com.gojek.parkinglot.service.ParkingService;
 
 public class RequestCommand implements Command {
@@ -19,7 +18,7 @@ public class RequestCommand implements Command {
     @Override
     public void execute(String command) {
         String commandWithInputs[] = command.split(ParkingLotConstants.SPACE);
-        switch (command){
+        switch (commandWithInputs[0]){
             case ParkingLotConstants.CREATE_PARKING_LOT:
                 try {
                     Integer slots = Integer.parseInt(commandWithInputs[1]);
@@ -39,13 +38,13 @@ public class RequestCommand implements Command {
                 }
                 break;
             case ParkingLotConstants.PARK:
-                parkingService.park(new Car(commandWithInputs[1], Color.valueOf(commandWithInputs[2])));
+                parkingService.park(new Car(commandWithInputs[1], commandWithInputs[2]));
                 break;
             case ParkingLotConstants.STATUS:
                 parkingService.getStatus();
                 break;
             case ParkingLotConstants.REG_NUMBER_FOR_CARS_WITH_COLOR:
-                parkingService.getRegNumberForColor(Color.valueOf(commandWithInputs[1]));
+                parkingService.getRegNumberForColor(commandWithInputs[1]);
                 break;
             case ParkingLotConstants.SLOTS_NUMBER_FOR_CARS_WITH_COLOR:
                 parkingService.getSlotNumbersFromColor(commandWithInputs[1]);

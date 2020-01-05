@@ -7,7 +7,7 @@ public class NearestAllotStrategy implements BaseStrategy {
     private TreeSet<Integer> slots;
 
     public NearestAllotStrategy(){
-        slots = new TreeSet<Integer>();
+        slots = new TreeSet<>();
     }
 
     @Override
@@ -17,7 +17,7 @@ public class NearestAllotStrategy implements BaseStrategy {
     }
 
     @Override
-    public void freeSlot(Integer slot) {
+    public void removeSlot(Integer slot) {
         slots.remove(slot);
     }
 

@@ -1,6 +1,7 @@
 package com.gojek.parkinglot.request.factory;
 
 import com.gojek.parkinglot.command.Command;
+import com.gojek.parkinglot.dao.Impl.StorageDaoImpl;
 import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.unchecked.InvalidInputTypeException;
 import com.gojek.parkinglot.request.command.RequestCommand;
@@ -13,7 +14,7 @@ public class RequestFactory {
     }
 
     public static RequestType process(String... args) {
-        Command command = new RequestCommand(new ParkingServiceImpl());
+        Command command = new RequestCommand(new ParkingServiceImpl(new StorageDaoImpl()));
         switch (args.length) {
             case 0:
                 return new InteractiveRequestType(command);
