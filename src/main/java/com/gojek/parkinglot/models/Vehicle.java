@@ -1,7 +1,6 @@
 package com.gojek.parkinglot.models;
 
 import java.util.Objects;
-import java.util.Random;
 
 public abstract class Vehicle {
 

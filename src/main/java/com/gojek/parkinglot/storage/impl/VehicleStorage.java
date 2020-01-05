@@ -1,8 +1,8 @@
-package com.gojek.parkinglot.dao.Impl;
+package com.gojek.parkinglot.storage.impl;
 
 import com.gojek.parkinglot.constants.ParkingLotConstants;
-import com.gojek.parkinglot.dao.StorageStructure;
 import com.gojek.parkinglot.models.Vehicle;
+import com.gojek.parkinglot.storage.StorageStructure;
 import com.gojek.parkinglot.strategy.BaseStrategy;
 import com.gojek.parkinglot.strategy.NearestAllotStrategy;
 
@@ -36,7 +36,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
     private static VehicleStorage instance = null;
 
 
-    static <T extends Vehicle> VehicleStorage<T> init(Integer capacity, Integer available, BaseStrategy parkingStrategy) {
+    public static <T extends Vehicle> VehicleStorage<T> init(Integer capacity, Integer available, BaseStrategy parkingStrategy) {
         if (VehicleStorage.instance == null) {
             synchronized (StorageStructure.class) {
                 if (VehicleStorage.instance == null) {
@@ -47,8 +47,12 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
         return VehicleStorage.instance;
     }
 
-    public static VehicleStorage getInstance(){
+    public static VehicleStorage getInstance() {
         return VehicleStorage.instance;
+    }
+
+    public static void destroyInstance() {
+        VehicleStorage.instance = null;
     }
 
     @Override
@@ -56,11 +60,11 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
         if (this.available.get() == 0) {
             return ParkingLotConstants.PARKING_FULL;
         }
-        Integer allocatedSlot = this.parkingStrategy.getSlot();
-        this.parkingStrategy.removeSlot(allocatedSlot);
-        if(this.slotVehicleMap.containsValue(vehicle)){
+        if (this.slotVehicleMap.containsValue(vehicle)) {
             return ParkingLotConstants.VEHICLE_EXISTS;
         }
+        Integer allocatedSlot = this.parkingStrategy.getSlot();
+        this.parkingStrategy.removeSlot(allocatedSlot);
         slotVehicleMap.put(allocatedSlot, vehicle);
         available.decrementAndGet();
         return allocatedSlot;
@@ -84,7 +88,7 @@ public class VehicleStorage<T extends Vehicle> implements StorageStructure<T> {
         for (int i = 1; i <= capacity.get(); i++) {
             Vehicle vehicle = slotVehicleMap.get(i);
             if (null != vehicle) {
-                statusList.add(i + "\t\t" + vehicle.getRegistrationNumber() + "\t\t" + vehicle.getColor());
+                statusList.add(i + "           " + vehicle.getRegistrationNumber() + "      " + vehicle.getColor());
             }
         }
         return statusList;

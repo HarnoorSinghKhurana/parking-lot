@@ -1,4 +1,4 @@
-package com.gojek.parkinglot.dao;
+package com.gojek.parkinglot.storage;
 
 import com.gojek.parkinglot.models.Vehicle;
 

@@ -2,6 +2,7 @@ package com.gojek.parkinglot.dao.Impl;
 
 import com.gojek.parkinglot.dao.StorageDao;
 import com.gojek.parkinglot.models.Vehicle;
+import com.gojek.parkinglot.storage.impl.VehicleStorage;
 import com.gojek.parkinglot.strategy.NearestAllotStrategy;
 
 import java.util.List;

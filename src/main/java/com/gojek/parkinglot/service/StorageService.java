@@ -2,7 +2,8 @@ package com.gojek.parkinglot.service;
 
 import com.gojek.parkinglot.models.Vehicle;
 
-public interface StorageService extends BaseService{
+public interface StorageService extends BaseService {
+
     void createParkingLot(Integer slots);
 
     void park(Vehicle vehicle);

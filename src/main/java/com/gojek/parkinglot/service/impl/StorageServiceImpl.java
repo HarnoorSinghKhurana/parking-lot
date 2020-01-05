@@ -81,7 +81,7 @@ public class StorageServiceImpl implements StorageService {
             if (statusList.size() == 0) {
                 System.out.println("Parking does not exist!");
             } else {
-                System.out.println("Slot No.\tRegistration No.\tColour");
+                System.out.println("Slot No.    Registration No    Colour");
                 statusList.forEach(System.out::println);
             }
         } catch (Exception e) {
@@ -100,9 +100,9 @@ public class StorageServiceImpl implements StorageService {
             lock.readLock().lock();
             List<String> registrationList = storageDao.getRegNumberForColor(color);
             if (registrationList.size() == 0)
-                System.out.println("Not Found");
+                System.out.println("Not found");
             else {
-                System.out.println(String.join(",", registrationList));
+                System.out.println(String.join(", ", registrationList));
             }
         } catch (Exception e) {
             if (!(e instanceof ParkingLotException)) {
@@ -120,10 +120,10 @@ public class StorageServiceImpl implements StorageService {
             lock.readLock().lock();
             List<Integer> slotList = storageDao.getSlotNumbersFromColor(color);
             if (slotList.size() == 0)
-                System.out.println("Not Found");
+                System.out.println("Not found");
             else {
                 System.out.println(slotList.stream().map(String::valueOf)
-                        .collect(Collectors.joining(",")));
+                        .collect(Collectors.joining(", ")));
             }
         } catch (Exception e) {
             if (!(e instanceof ParkingLotException)) {
@@ -140,7 +140,7 @@ public class StorageServiceImpl implements StorageService {
         try {
             lock.readLock().lock();
             Integer value = storageDao.getSlotNoFromRegistrationNo(registrationNo);
-            System.out.println(value != Integer.MIN_VALUE ? value : "Not Found");
+            System.out.println(value != Integer.MIN_VALUE ? value : "Not found");
         } catch (Exception e) {
             if (!(e instanceof ParkingLotException)) {
                 throw new ParkingLotException(ExceptionCode.COMPUTATION_ERROR, ExceptionCode.COMPUTATION_ERROR.getMessage());
@@ -149,5 +149,10 @@ public class StorageServiceImpl implements StorageService {
         } finally {
             lock.readLock().unlock();
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Slot No.    Registration No    Colour");
+        System.out.println("1           KA-01-HH-1234      White");
     }
 }
