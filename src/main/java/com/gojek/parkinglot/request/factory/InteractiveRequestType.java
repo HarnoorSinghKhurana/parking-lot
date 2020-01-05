@@ -6,14 +6,14 @@ import com.gojek.parkinglot.exception.ExceptionCode;
 import com.gojek.parkinglot.exception.ParkingLotException;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class InteractiveRequestType implements RequestType {
 
     private Command command;
 
-    public InteractiveRequestType() {
-    }
+    public InteractiveRequestType (){}
 
     public InteractiveRequestType(Command command) {
         this.command = command;
@@ -21,8 +21,10 @@ public class InteractiveRequestType implements RequestType {
 
     @Override
     public void begin() {
+        BufferedReader bufferReader = null;
         while (true) {
-            try (BufferedReader bufferReader = new BufferedReader(new InputStreamReader(System.in));) {
+            try {
+                bufferReader = new BufferedReader(new InputStreamReader(System.in));
                 String input = bufferReader.readLine().trim();
                 if (input.equalsIgnoreCase(ParkingLotConstants.EXIT)) {
                     break;
